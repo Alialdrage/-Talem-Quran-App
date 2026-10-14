@@ -1,0 +1,488 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const QuranLearningApp());
+}
+
+class QuranLearningApp extends StatelessWidget {
+  const QuranLearningApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'مدرسة القرآن الكريم',
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        scaffoldBackgroundColor: const Color(0xFFF4F7F5),
+        fontFamily: 'Roboto',
+      ),
+      home: const MainTabScreen(),
+    );
+  }
+}
+
+class MainTabScreen extends StatefulWidget {
+  const MainTabScreen({super.key});
+
+  @override
+  State<MainTabScreen> createState() => _MainTabScreenState();
+}
+
+class _MainTabScreenState extends State<MainTabScreen> {
+  int _currentIndex = 0;
+  final List<Widget> _screens = const [
+    HomeScreen(),
+    TajweedScreen(),
+    AboutScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.teal,
+          unselectedItemColor: Colors.grey,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: 'السور التعليمية'),
+            BottomNavigationBarItem(icon: Icon(Icons.gavel), label: 'أحكام التجويد'),
+            BottomNavigationBarItem(icon: Icon(Icons.info), label: 'عن التطبيق'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Map<String, dynamic>> _allSurahs = const [
+    {
+      'id': 1,
+      'name': 'الفاتحة',
+      'type': 'مكية',
+      'versesCount': '7 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+        'الرَّحْمَٰنِ الرَّحِيمِ',
+        'مَالِكِ يَوْمِ الدِّينِ',
+        'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',
+        'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',
+        'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ'
+      ]
+    },
+    {
+      'id': 2,
+      'name': 'الإخلاص',
+      'type': 'مكية',
+      'versesCount': '4 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'قُلْ هُوَ اللَّهُ أَحَدٌ',
+        'اللَّهُ الصَّمَدُ',
+        'لَمْ يَلِدْ وَلَمْ يُولَدْ',
+        'وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ'
+      ]
+    },
+    {
+      'id': 3,
+      'name': 'الفلق',
+      'type': 'مكية',
+      'versesCount': '5 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',
+        'مِن شَرِّ مَا خَلَقَ',
+        'وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ',
+        'وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ',
+        'وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ'
+      ]
+    },
+    {
+      'id': 4,
+      'name': 'الناس',
+      'type': 'مكية',
+      'versesCount': '6 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
+        'مَلِكِ النَّاسِ',
+        'إِلَٰهِ النَّاسِ',
+        'مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ',
+        'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ',
+        'مِنَ الْجِنَّةِ وَالنَّاسِ'
+      ]
+    },
+    {
+      'id': 5,
+      'name': 'الكوثر',
+      'type': 'مكية',
+      'versesCount': '3 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',
+        'فَصَلِّ لِرَبِّكَ وَانْحَرْ',
+        'إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ'
+      ]
+    },
+    {
+      'id': 6,
+      'name': 'النصر',
+      'type': 'مدنية',
+      'versesCount': '3 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',
+        'وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا',
+        'فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ إِنَّهُ كَانَ تَوَّابًا'
+      ]
+    },
+    {
+      'id': 7,
+      'name': 'الكافرون',
+      'type': 'مكية',
+      'versesCount': '6 آيات',
+      'verses': [
+        'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+        'قُلْ يَا أَيُّهَا الْكَافِرُونَ',
+        'لَا أَعْبُدُ مَا تَعْبُدُونَ',
+        'وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ',
+        'وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ',
+        'وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ',
+        'لَكُمْ دِينُكُمْ وَلِيَ دِينِ'
+      ]
+    }
+  ];
+
+  List<Map<String, dynamic>> _filteredSurahs = [];
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredSurahs = _allSurahs;
+  }
+
+  void _searchSurah(String query) {
+    setState(() {
+      _searchQuery = query;
+      if (query.isEmpty) {
+        _filteredSurahs = _allSurahs;
+      } else {
+        _filteredSurahs = _allSurahs
+            .where((surah) => surah['name'].contains(query))
+            .toList();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('مدرسة القرآن التعليمية', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
+        elevation: 4,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Card(
+              color: Colors.amber.shade100,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.auto_stories, color: Colors.teal, size: 32),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'قال النبي محمد صلى الله عليه وسلم: خيركم من تعلم القرآن وعلمه',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.teal),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+            TextField(
+              onChanged: _searchSurah,
+              decoration: InputDecoration(
+                hintText: 'ابحث عن سورة...',
+                prefixIcon: const Icon(Icons.search, color: Colors.teal),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Expanded(
+              child: _filteredSurahs.isEmpty
+                  ? const Center(child: Text('لم يتم العثور على السورة'))
+                  : ListView.builder(
+                      itemCount: _filteredSurahs.length,
+                      itemBuilder: (context, index) {
+                        final surah = _filteredSurahs[index];
+                        return Card(
+                          elevation: 3,
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.teal.shade400,
+                              child: Text('${surah['id']}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                            ),
+                            title: Text(surah['name'], style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            subtitle: Text('${surah['type']} - ${surah['versesCount']}'),
+                            trailing: const Icon(Icons.arrow_forward_ios, color: Colors.teal, size: 18),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SurahStudyScreen(
+                                    surahName: surah['name'],
+                                    verses: List<String>.from(surah['verses']),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SurahStudyScreen extends StatefulWidget {
+  final String surahName;
+  final List<String> verses;
+
+  const SurahStudyScreen({super.key, required this.surahName, required this.verses});
+
+  @override
+  State<SurahStudyScreen> createState() => _SurahStudyScreenState();
+}
+
+class _SurahStudyScreenState extends State<SurahStudyScreen> {
+  Map<int, int> repeatCounters = {}; 
+  int lastReadVerse = -1; 
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('سورة ${widget.surahName}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.teal,
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.all(12),
+          itemCount: widget.verses.length,
+          itemBuilder: (context, index) {
+            int currentCount = repeatCounters[index] ?? 0;
+            bool isLastRead = lastReadVerse == index;
+
+            return Card(
+              elevation: 2,
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: isLastRead ? Colors.teal : Colors.transparent,
+                  width: 2,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: Colors.teal.shade100,
+                          child: Text(
+                            '${index + 1}',
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.teal),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                isLastRead ? Icons.bookmark : Icons.bookmark_border,
+                                color: Colors.teal,
+                              ),
+                              tooltip: 'تحديد كآخر قراءة',
+                              onPressed: () {
+                                setState(() {
+                                  lastReadVerse = index;
+                                });
+                              },
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  repeatCounters[index] = currentCount + 1;
+                                });
+                              },
+                              icon: const Icon(Icons.repeat, size: 16),
+                              label: Text('$currentCount'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.teal,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      widget.verses[index],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        height: 1.8,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class TajweedScreen extends StatelessWidget {
+  const TajweedScreen({super.key});
+
+  final List<Map<String, String>> rules = const [
+    {
+      'title': 'أحكام النون الساكنة والتنوين',
+      'desc': 'الإظهار، الإدغام، الإقلاب، والإخفاء. وهي من أساسيات تلاوة القرآن وتجويده.'
+    },
+    {
+      'title': 'أحكام الميم الساكنة',
+      'desc': 'الإخفاء الشفوي، الإدغام الصغير، والإظهار الشفوي عند سائر الحروف.'
+    },
+    {
+      'title': 'أحكام المدود',
+      'desc': 'المد الطبيعي، والمد الفرعي (الواجب المتصل، الجائز المنفصل، العارض للسكون، واللازم).'
+    },
+    {
+      'title': 'القلقلة',
+      'desc': 'حروف القلقلة خمسة مجموعة في كلمة (قطب جد)، وتكون كبرى أو صغرى.'
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('أحكام التجويد الميسرة', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(12),
+        itemCount: rules.length,
+        itemBuilder: (context, index) {
+          final rule = rules[index];
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Colors.teal,
+                child: Icon(Icons.gavel, color: Colors.white),
+              ),
+              title: Text(rule['title']!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(rule['desc']!, style: const TextStyle(fontSize: 14)),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('عن التطبيق', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.menu_book, size: 70, color: Colors.teal),
+            SizedBox(height: 16),
+            Text(
+              'تطبيق تعليم القرآن الكريم',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.teal),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'يهدف هذا التطبيق إلى تيسير قراءة وحفظ وتدبر سور القرآن الكريم مع تكرار الآيات والاطلاع على أحكام التجويد الأساسية.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15, height: 1.6),
+            ),
+            SizedBox(height: 24),
+            Text(
+              'الإصدار 1.0.0',
+              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
